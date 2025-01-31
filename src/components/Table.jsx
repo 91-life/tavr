@@ -31,67 +31,67 @@ export default function Table({
               <tr>
                 <th
                   scope="col"
-                  className="py-3.5 px-5 text-left text-sm font-semibold text-gray-500"
+                  className="p-3 text-left text-sm font-semibold text-gray-500"
                 >
                   Patient
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3.5 text-center text-sm font-semibold text-gray-500"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
                   Doctor
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3.5 text-center text-sm font-semibold text-gray-500"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
                   Diagnosis
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3.5 text-center text-sm font-semibold text-gray-500"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
                   Latest Echo
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3.5 text-center text-sm font-semibold text-gray-500"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
                   Latest CT Scan
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3.5 text-center text-sm font-semibold text-gray-500"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
                   Labs
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3.5 text-center text-sm font-semibold text-gray-500"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
                   Appointment
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3.5 text-center text-sm font-semibold text-gray-500"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
                   Device Rep. Interpretation
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3.5 text-center text-sm font-semibold text-gray-500"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
                   Patient Status
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3.5 text-center text-sm font-semibold text-gray-500"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
                   Index Scores
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3.5 text-center text-sm font-semibold text-gray-500"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
                   <div className="flex gap-1">
                     <span>Timeline</span>
@@ -110,39 +110,42 @@ export default function Table({
             <tbody className="divide-y divide-gray-200 bg-white">
               {displayedPatients.map((patient) => (
                 <tr>
-                  <td className="block min-h-[100px] whitespace-nowrap py-4 px-5 text-sm text-gray-900">
-                    <p className="font-semibold mb-1">{patient.name}</p>
-                    <span>
-                      {patient.dateOfBirth} - {patient.MRI}
-                    </span>
+                  <td className="block min-h-[100px] p-3 text-sm text-gray-900">
+                    <div>
+                      <p className="font-semibold mb-1">{patient.name}</p>
+                      <span className="whitespace-nowrap">
+                        {patient.dateOfBirth} -
+                      </span>
+                      {patient.MRI}
+                    </div>
                   </td>
-                  <td className="whitespace-nowrap px-5 py-4 text-sm text-gray-900">
+                  <td className="p-3 text-sm text-gray-900">
                     {patient.doctor}
                   </td>
-                  <td className="whitespace-nowrap px-5 py-4 text-sm text-gray-900 font-semibold">
+                  <td className="p-3 text-sm text-gray-900 font-semibold">
                     <div className="rounded-[6px] bg-[#EAECF0] py-[2px] px-[8px]">
                       {patient.diagnosis}
                     </div>
                   </td>
                   <td
-                    className="whitespace-nowrap px-5 py-4 underline text-sm"
+                    className="p-3 underline text-sm"
                     style={{ color: patient.latestEcho.color || "#009758" }}
                   >
                     {patient.latestEcho.date}
                   </td>
                   <td
-                    className="whitespace-nowrap px-5 py-4 underline text-sm text-center"
+                    className="p-3 underline text-sm text-center"
                     style={{ color: patient.latestCTScan.color || "#2654EB" }}
                   >
                     {patient.latestCTScan.date || `---`}
                   </td>
                   <td
-                    className="whitespace-nowrap px-5 py-4 underline text-sm text-center"
+                    className="p-3 underline text-sm text-center"
                     style={{ color: patient.labs.color || "#2654EB" }}
                   >
                     {patient.labs.date || `---`}
                   </td>
-                  <td className="whitespace-nowrap px-5 py-4 text-sm text-center">
+                  <td className="whitespace-nowrap p-3 text-sm text-center">
                     <div className="flex gap-1 ">
                       <span
                         className="underline"
@@ -159,10 +162,10 @@ export default function Table({
                       />
                     </div>
                   </td>
-                  <td className="whitespace-nowrap px-5 py-4 text-sm text-gray-400">
+                  <td className="p-3 text-sm text-gray-400">
                     {patient.dvcRepIntpr}
                   </td>
-                  <td className="px-5 py-4">
+                  <td className="p-3">
                     <div className="flex justify-center">
                       <Button
                         onClick={() =>
@@ -223,7 +226,7 @@ export default function Table({
                     )}
                   </td>
                   <td
-                    className="whitespace-nowrap px-5 py-4 text-xs"
+                    className="p-3 text-xs"
                     style={{
                       color: patient.timeline.status.color || "#02844E",
                     }}
@@ -245,51 +248,51 @@ export default function Table({
                         </div>
                       )}
                     </div>
-                    <div className="flex gap-1">
+                    <div className="grid grid-cols-7 gap-1">
                       <div
-                        className="w-4 h-4 rounded-full border border-[#000000]"
+                        className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
                             patient.timeline.progress.first || "#ffffff",
                         }}
                       />
                       <div
-                        className="w-4 h-4 rounded-full border border-[#000000]"
+                        className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
                             patient.timeline.progress.second || "#ffffff",
                         }}
                       />
                       <div
-                        className="w-4 h-4 rounded-full border border-[#000000]"
+                        className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
                             patient.timeline.progress.third || "#ffffff",
                         }}
                       />
                       <div
-                        className="w-4 h-4 rounded-full border border-[#000000]"
+                        className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
                             patient.timeline.progress.fourth || "#ffffff",
                         }}
                       />
                       <div
-                        className="w-4 h-4 rounded-full border border-[#000000]"
+                        className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
                             patient.timeline.progress.fifth || "#ffffff",
                         }}
                       />
                       <div
-                        className="w-4 h-4 rounded-full border border-[#000000]"
+                        className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
                             patient.timeline.progress.sixth || "#ffffff",
                         }}
                       />
                       <div
-                        className="w-4 h-4 rounded-full border border-[#000000]"
+                        className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
                             patient.timeline.progress.seventh || "#ffffff",
@@ -300,7 +303,7 @@ export default function Table({
                 </tr>
               ))}
               <tr>
-                <td colspan={11} className="py-4 px-5">
+                <td colspan={11} className="p-3">
                   <Pagination
                     totalPages={totalPages}
                     itemsPerPage={itemsPerPage}
