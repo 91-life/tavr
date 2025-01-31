@@ -17,7 +17,7 @@ function Navbar() {
       <div className="flex items-center justify-center right-8 fixed w-auto pr-20">
         <Menu as="div" className="relative">
           <MenuButton className="-m-1.5 flex items-center p-1.5 gap-x-4">
-            <span className="sr-only">Open user menu</span>
+            <span className="sr-only">Open user menu </span>
             <img
               alt=""
               src="images/doctor.png"
