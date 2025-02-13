@@ -2,8 +2,8 @@
 
 import moment from "moment"
 import { useState, useEffect, useRef } from "react"
-import { Form, Input, Checkbox, DatePicker, Typography, Card, Row, Col, Steps, Radio } from "antd"
-import { CheckCircleFilled, CalendarOutlined } from "@ant-design/icons"
+import { Form, Checkbox, DatePicker, Typography, Card, Row, Col, Steps, Radio } from "antd"
+import { CheckCircleFilled } from "@ant-design/icons"
 import TextArea from "antd/es/input/TextArea"
 
 const { Title, Text } = Typography
@@ -97,7 +97,7 @@ const SidePanel = ({ stages }) => (
   </Card>
 )
 
-const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes }) => {
+const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes, updateDates }) => {
   const [progress, setProgress] = useState({
     first: patient?.timeline?.progress?.first || "#d9d9d9",
     second: patient?.timeline?.progress?.second || "#d9d9d9",
@@ -196,7 +196,8 @@ const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes }) 
                 <DatePicker
                       style={{ width: "100%" }}
                       format="DD/MM/YY"
-                      value={patient?.appointment?.date ? formatDate(patient.appointment.date) : null}
+                      defaultValue={patient?.appointment?.date ? formatDate(patient.appointment.date) : null}
+                      onChange={(_, date) => updateDates("appointment", date)}
                     />
                 </Form.Item>
               </div>
@@ -206,7 +207,8 @@ const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes }) 
                 <DatePicker
                       style={{ width: "100%" }}
                       format="DD/MM/YY"
-                      value={patient?.latestEcho?.date ? formatDate(patient.latestEcho.date) : null}
+                      defaultValue={patient?.latestEcho?.date ? formatDate(patient.latestEcho.date) : null}
+                      onChange={(_, date) => updateDates("latestEcho", date)}
                     />
                 </Form.Item>
                 <button style={{width: 110,
@@ -252,7 +254,8 @@ marginLeft: '5px',
                 <DatePicker
                       style={{ width: "100%" }}
                       format="DD/MM/YY"
-                      value={patient.newEcho?.date ? formatDate(patient.newEcho.date) : null}
+                      defaultValue={patient.newEcho?.date ? formatDate(patient.newEcho.date) : null}
+                      onChange={(_, date) => updateDates("newEcho", date)}
                     />
                 </Form.Item>
               </div>
@@ -321,7 +324,8 @@ marginLeft: '5px',
                 <DatePicker
                         style={{ width: "100%" }}
                         format="DD/MM/YY"
-                        value={!!patient?.ctsConsultation?.date ? formatDate(patient.ctsConsultation.date) : null}
+                        defaultValue={!!patient?.ctsConsultation?.date ? formatDate(patient.ctsConsultation.date) : null}
+                        onChange={(_, date) => updateDates("ctsConsultation", date)}
                       />
                 </Form.Item>
               </div>
@@ -361,7 +365,8 @@ marginLeft: '5px',
               <DatePicker
                       style={{ width: "100%" }}
                       format="DD/MM/YY"
-                      value={patient?.ctScan?.date ? formatDate(patient.ctScan.date) : null}
+                      defaultValue={patient?.ctScan?.date ? formatDate(patient.ctScan.date) : null}
+                      onChange={(_, date) => updateDates("ctScan", date)}
                     />
               </Form.Item>
               </div>
@@ -455,7 +460,8 @@ marginLeft: '5px',
                 <DatePicker
                       style={{ width: "100%" }}
                       format="DD/MM/YY"
-                      value={patient?.tavrAppointment?.date ? formatDate(patient.tavrAppointment.date) : null}
+                      defaultValue={patient?.tavrAppointment?.date ? formatDate(patient.tavrAppointment.date) : null}
+                      onChange={(_, date) => updateDates("tavrAppointment", date)}
                     />
                 </Form.Item>
               </div>

@@ -10,6 +10,7 @@ import TAVRWorkflowForm from "./DataModal";
 import { Modal } from 'antd';
 
 import { patients as initialPatients } from "../data/patients";
+import moment from "moment";
 
 export default function MainContent() {
   const [displayTable, setDisplayTable] = useState(true);
@@ -159,6 +160,20 @@ export default function MainContent() {
     localStorage.setItem("patients", JSON.stringify(updatedPatients));
   }
 
+  const updateDates = (field, date) => {
+    const updatedPatients = patients.map(patient => {
+      if (patient.MRI === selectedPatient.MRI) {
+        if (patient?.[field] && date) {
+          patient[field].date = moment(date).format("MM/DD/YYYY");
+        }
+      }
+      return patient;
+    });
+
+    setPatients(updatedPatients);
+    localStorage.setItem("patients", JSON.stringify(updatedPatients));
+  }
+
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -225,6 +240,7 @@ export default function MainContent() {
             patient={selectedPatient}
             updateProgress={updateProgress}
             updatePatientCheckboxes={updatePatientCheckboxes}
+            updateDates={updateDates}
           />
         </Modal>}
       {displayScheduleForm && <ScheduleForm patient={selectedPatient} />}

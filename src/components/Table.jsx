@@ -126,7 +126,7 @@ export default function Table({
                     className="p-3 underline text-sm"
                     style={{ color: patient.latestEcho.color || "#009758" }}
                   >
-                    {patient.latestEcho.date}
+                    {patient.latestEcho.date || "---"}
                   </td>
                   <td
                     className="p-3 underline text-sm text-center"
