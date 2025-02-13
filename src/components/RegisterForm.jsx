@@ -44,9 +44,9 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-screen h-screen justify-center items-center gap-9 pl-32"
+      className="grid grid-cols-2 gap-6 p-6 h-full"
     >
-      <div className="FormField flex-row h-1/2">
+      <div className="FormField grid justify-items-end h-1/2">
         <div className="h-20">
           <label
             htmlFor="firstName"

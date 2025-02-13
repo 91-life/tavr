@@ -8,6 +8,7 @@ import ScheduleForm from "./ScheduleForm";
 import "../index.css";
 
 import { patients as initialPatients } from "../data/patients";
+import { Modal } from "antd";
 
 export default function MainContent() {
   const [displayTable, setDisplayTable] = useState(true);
@@ -93,7 +94,7 @@ export default function MainContent() {
       },
     };
     const updatedPatients = [newPatient, ...patients];
-    setPatients(updatedPatients); 
+    setPatients(updatedPatients);
     localStorage.setItem("patients", JSON.stringify(updatedPatients));
     setDisplayRegisterForm(false);
     setDisplayTable(true);
@@ -133,11 +134,24 @@ export default function MainContent() {
           />
         </>
       )}
-      {displayRegisterForm && (
+      <Modal
+        title="Register Patient"
+        open={displayRegisterForm}
+        onCancel={() => {
+          setDisplayRegisterForm(false);
+          setDisplayTable(true);
+        }}
+        width="90vw"
+        style={{
+          height: "90vh !important",
+        }}
+        footer={null}
+      >
         <RegisterForm
+          key={displayRegisterForm ? Date.now() : ""}
           handleRegisterPatientButtonClick={handleRegisterPatientButtonClick}
         />
-      )}
+      </Modal>
       {displayUpdateForm && <UpdateForm patient={selectedPatient} />}
       {displayScheduleForm && <ScheduleForm patient={selectedPatient} />}
     </div>
