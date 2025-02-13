@@ -56,8 +56,6 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               name="firstName"
               type="text"
               placeholder="N/A"
-              value={formData.firstName}
-              onChange={handleChange}
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
             />
           </div>
@@ -75,8 +73,6 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               name="lastName"
               type="text"
               placeholder="N/A"
-              value={formData.lastName}
-              onChange={handleChange}
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
             />
           </div>
@@ -94,8 +90,6 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               name="dateOfBirth"
               type="text"
               placeholder="DD/MM/YY"
-              value={formData.dateOfBirth}
-              onChange={handleChange}
               className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
             />
             <CalendarIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></CalendarIcon>
@@ -114,8 +108,6 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               name="age"
               type="text"
               placeholder="-"
-              value={formData.age}
-              onChange={handleChange}
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
             />
           </div>
@@ -133,8 +125,6 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               name="gender"
               type="text"
               placeholder="-"
-              value={formData.gender}
-              onChange={handleChange}
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
             />
           </div>
@@ -154,8 +144,6 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               name="mrn"
               type="text"
               placeholder="-"
-              value={formData.mrn}
-              onChange={handleChange}
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
             />
           </div>
@@ -173,8 +161,6 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               name="diagnosis"
               type="text"
               placeholder=""
-              value={formData.diagnosis}
-              onChange={handleChange}
               className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
             />
             <MagnifyingGlassIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></MagnifyingGlassIcon>
@@ -195,21 +181,25 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
                   name="echoDate"
                   type="text"
                   placeholder="DD/MM/YY"
-                  value={formData.echoDate}
-                  onChange={handleChange}
                   className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
                 />
                 <CalendarIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></CalendarIcon>
               </div>
-              <button className="bg-green-700 opacity-70 px-3 py-1 rounded-lg text-white text-sm">
+              <button
+                style={{ backgroundColor: "rgba(0, 153, 153, 1)" }}
+                className="opacity-70 px-3 py-1 rounded-lg text-white text-sm"
+              >
                 Upload Echo
               </button>
               <button className="bg-gray-500 px-3 py-1 rounded-lg text-white text-sm">
                 Obtain Echo
               </button>
-              <span className="infotext w-40 h-16 flex justify-center items-center p-2 bg-gray-200 rounded-lg text-center">
-                Call XYZ office to request echo
-              </span>
+              <div className="relative">
+                <span className="infotext w-40 h-16 flex justify-center items-center p-2 bg-gray-200 rounded-lg text-center">
+                  Call XYZ office to request echo
+                </span>
+                <div className="absolute right-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-8 border-b-8 border-transparent border-r-8 border-r-gray-200"></div>
+              </div>
             </div>
             <div className="flex items-center pt-3">
               <p className="text-red-500 text-xs font-semibold">
@@ -270,8 +260,6 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               name="consultationAppointment"
               type="text"
               placeholder="DD/MM/YY"
-              value={formData.consultationAppointment}
-              onChange={handleChange}
               className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
             />
             <CalendarIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></CalendarIcon>
@@ -290,8 +278,6 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               name="physician"
               type="text"
               placeholder=""
-              value={formData.physician}
-              onChange={handleChange}
               className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
             />
             <MagnifyingGlassIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></MagnifyingGlassIcon>
@@ -299,8 +285,8 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
         </div>
         <div className="pt-2 w-96 flex justify-end">
           <button
-            type="submit"
-            className="bg-green-700 px-4 py-2 rounded-lg text-white"
+            style={{ backgroundColor: "rgba(0, 153, 153, 1)" }}
+            className="px-4 py-2 rounded-lg text-white"
           >
             Register Patient
           </button>
