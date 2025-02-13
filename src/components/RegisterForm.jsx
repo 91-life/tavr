@@ -203,9 +203,6 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               </div>
             </div>
             <div className="flex items-center pt-3">
-              <p className="text-red-500 text-xs font-semibold">
-                If no echo date &gt; 30, 'Schedule Echo' will highlight
-              </p>
               <div className="flex h-6 shrink-0 items-center pl-2">
                 <div className="group grid size-4 grid-cols-1">
                   <input
