@@ -238,7 +238,7 @@ const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes }) 
                   </Radio.Group>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '20px' }}>
-                  <Checkbox value={patient?.canPatientWalk} onChange={(e) => {
+                  <Checkbox checked={patient?.canPatientWalk} onChange={(e) => {
                     handleProgressUpdate(1, e.target.checked ? "completed" : "inProgress")
                     updatePatientCheckboxes("canPatientWalk", e.target.checked)
                   }}>
