@@ -40,7 +40,6 @@ export default function MainContent() {
   );
 
   const handleAddPatientButtonClick = () => {
-    resetDisplay();
     setDisplayRegisterForm(true);
   };
 

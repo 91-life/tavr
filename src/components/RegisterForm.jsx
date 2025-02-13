@@ -27,6 +27,14 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!formData.physician && doctors.length > 0) {
+      formData.physician = doctors[0];  // Set the first doctor
+    }
+
+    if (!formData.diagnosis) {
+      formData.diagnosis = "Aortic Stenosis"
+    }
+
     handleRegisterPatientButtonClick(formData);
     setFormData({
       firstName: "",
