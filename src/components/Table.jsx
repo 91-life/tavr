@@ -1,16 +1,12 @@
 import Button from "./Button";
 import Pagination from "./Pagination";
-
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
-
 export default function Table({
   displayedPatients,
   totalPages,
@@ -123,7 +119,7 @@ export default function Table({
                     </div>
                   </td>
                   <td
-                    className="p-3 underline text-sm"
+                    className="p-3 underline text-sm text-center"
                     style={{ color: patient.latestEcho.color || "#009758" }}
                   >
                     {patient.latestEcho.date || "---"}
@@ -134,8 +130,8 @@ export default function Table({
                   >
                     {patient.latestCTScan.date || `---`}
                   </td>
-                  <td className="whitespace-nowrap p-3 text-sm text-center">
-                    <div className="flex gap-1 ">
+                  <td className="p-3 text-sm text-center">
+                    <div className="flex gap-1 flex justify-center align-center">
                       <span
                         className="underline"
                         style={{
@@ -151,7 +147,7 @@ export default function Table({
                       />
                     </div>
                   </td>
-                  <td className="p-3 text-sm text-gray-400">
+                  <td className="p-3 text-sm text-gray-400 text-center">
                     {patient.dvcRepIntpr}
                   </td>
                   
