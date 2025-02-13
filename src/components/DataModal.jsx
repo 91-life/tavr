@@ -142,7 +142,7 @@ const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes, up
             const stageIndex = Array.from(stageRefs.current).findIndex((ref) => ref === entry.target)
             if (stageIndex !== -1) {
               setStages((prevStages) =>
-                prevStages.map((s, i) => (i === stageIndex ? { ...s, status: "inProgress" } : s)),
+                prevStages.map((s, i) => (i === stageIndex ? { ...s, status: "pending" } : s)),
               )
             }
           }
@@ -172,7 +172,11 @@ const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes, up
   };
 
   const [kccq, setKccq] = useState(null);
-  console.log(patient.latestEcho.date,new Date(patient.latestEcho.date),new Date() - new Date(patient.latestEcho.date),new Date() - new Date(patient.latestEcho.date) > 30 * 24 * 60 * 60 * 1000 )
+  const [kccq1, setKccq1] = useState(null);
+  const [text1, setText1] = useState(patient?.indexScores?.kccScore || "");
+  const [text2, setText2] = useState(patient?.indexScores?.katzIndexScore || "");
+  const [text3, setText3] = useState(patient?.indexScores?.stsScore || "");
+
   return (
     <div style={{ maxWidth: 1300, margin: "0 auto", padding: "7px 7px 7px 0" }}>
       <Title level={2} style={{ marginBottom: 24 }}>
@@ -254,6 +258,7 @@ marginLeft: '5px',
                 <DatePicker
                       style={{ width: "100%" }}
                       format="DD/MM/YY"
+                      disabled={new Date() - new Date(patient.latestEcho.date) < 30 * 24 * 60 * 60 * 1000}
                       defaultValue={patient.newEcho?.date ? formatDate(patient.newEcho.date) : null}
                       onChange={(_, date) => updateDates("newEcho", date)}
                     />
@@ -261,7 +266,7 @@ marginLeft: '5px',
               </div>
               <Form.Item>
               <Checkbox checked={!!patient?.echoReceivedByProvider} onChange={(e) => {
-                    handleProgressUpdate(0, e.target.checked ? "completed" : "inProgress")
+                    handleProgressUpdate(0, e.target.checked ? "completed" : "pending")
                     updatePatientCheckboxes("echoReceivedByProvider", e.target.checked)
                   }}>
                 Echo Received By Provider
@@ -270,10 +275,6 @@ marginLeft: '5px',
             </Stage>
 
             <Stage innerRef={stageRefs.current[1]} title="Stage 2 - Initial Consultation" status={stages[1].status}>
-            <div style={{display: 'flex', flexDirection: 'row' , marginBottom: '10px'}}>
-            <div>Consultation Appointment:</div>
-            <Text style={{ display: 'block', marginLeft: '4px' }}>{patient.latestEcho?.date || '12/15/2025'}{' 10:30:00'}</Text>
-            </div>
                 <div style={{display: 'flex', flexDirection: 'row', marginBottom: '20px', marginTop: '20px'}}>
                   <div style={{ marginRight: '5px', width:'280px'}}>KCCQ, Katz Index Scores and STS Scores:</div>
                   <Radio.Group onChange={(e) => setKccq(e.target.value)} value={kccq}>
@@ -282,26 +283,41 @@ marginLeft: '5px',
                   </Radio.Group>
                 </div>
                 {kccq === "yes" && (
-                  <div>
-                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "10px" }}>
-                    <div style={{ marginRight: "10px", width: "150px" }}>KCCQ Score:</div>
-                    <Input style={{width: '100px'}} type="text" value={patient?.indexScores?.kccScore || ''} readOnly />
-                  </div>
-            
-                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "10px" }}>
-                    <div style={{ marginRight: "10px", width: "150px" }}>KATZ Index Score:</div>
-                    <Input style={{width: '100px'}} type="text" value={patient?.indexScores?.katzIndexScore || ''} readOnly />
-                  </div>
-            
-                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "15px" }}>
-                    <div style={{ marginRight: "10px", width: "150px" }}>STS Score:</div>
-                    <Input style={{width: '100px'}} type="text" value={patient?.indexScores?.stsScore || ''} readOnly />
-                  </div>
-                </div>
+                 <div>
+                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "10px" }}>
+                   <div style={{ marginRight: "10px", width: "150px" }}>KCCQ Score:</div>
+                   <Input 
+                     style={{ width: '100px' }} 
+                     type="text" 
+                     value={text1} 
+                     onChange={(e) => setText1(e.target.value)} 
+                   />
+                 </div>
+               
+                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "10px" }}>
+                   <div style={{ marginRight: "10px", width: "150px" }}>KATZ Index Score:</div>
+                   <Input 
+                     style={{ width: '100px' }} 
+                     type="text" 
+                     value={text2} 
+                     onChange={(e) => setText2(e.target.value)} 
+                   />
+                 </div>
+               
+                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "15px" }}>
+                   <div style={{ marginRight: "10px", width: "150px" }}>STS Score:</div>
+                   <Input 
+                     style={{ width: '100px' }} 
+                     type="text" 
+                     value={text3} 
+                     onChange={(e) => setText3(e.target.value)} 
+                   />
+                 </div>
+               </div>
                 )}
                 <div style={{display: 'flex', flexDirection: 'row', marginBottom: '20px'}}>
                 <Checkbox checked={patient?.canPatientWalk} onChange={(e) => {
-                    handleProgressUpdate(1, e.target.checked ? "completed" : "inProgress")
+                    handleProgressUpdate(1, e.target.checked ? "completed" : "pending")
                     updatePatientCheckboxes("canPatientWalk", e.target.checked)
                   }}>
                     Can patient walk?
@@ -309,7 +325,7 @@ marginLeft: '5px',
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '20px' }}>
                   <div style={{ marginRight: '5px', width: '280px' }}>Pre-TAVR Walk Test Completed:</div>
-                  <Radio.Group>
+                  <Radio.Group >
                     <Radio value="yes">Yes</Radio>
                     <Radio value="no">No</Radio>
                   </Radio.Group>
@@ -331,7 +347,7 @@ marginLeft: '5px',
               </div>
               <div style={{marginTop: '5px', marginLeft: '25px'}}>
               <Checkbox checked={!!patient?.ctsConsultationDateNotNeeded} onChange={(e) => {
-                      handleProgressUpdate(2, e.target.checked ? "completed" : "inProgress");
+                      handleProgressUpdate(2, e.target.checked ? "completed" : "pending");
                       updatePatientCheckboxes("ctsConsultationDateNotNeeded", e.target.checked)
                     }}>
                   Not needed
@@ -341,14 +357,14 @@ marginLeft: '5px',
               <Form.Item>
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                 <Checkbox checked={!!patient?.ctsConsultationCompleted} onChange={(e) => {
-                      handleProgressUpdate(2, e.target.checked ? "completed" : "inProgress");
+                      handleProgressUpdate(2, e.target.checked ? "completed" : "pending");
                       updatePatientCheckboxes("ctsConsultationCompleted", e.target.checked)
                     }}>
                   CTS Consultation Completed
                 </Checkbox>
                 <div style={{marginLeft: '15px'}}>
                 <Checkbox checked={!!patient?.ctScanCompletedNotNeeded} onChange={(e) => {
-                        handleProgressUpdate(2, e.target.checked ? "completed" : "inProgress");
+                        handleProgressUpdate(2, e.target.checked ? "completed" : "pending");
                         updatePatientCheckboxes("ctScanCompletedNotNeeded", e.target.checked)
                       }}>
                   Not needed
@@ -376,7 +392,7 @@ marginLeft: '5px',
               </Form.Item>
               <Form.Item>
               <Checkbox checked={!!patient?.ctScanUploaded} onChange={(e) => {
-                    handleProgressUpdate(3, e.target.checked ? "completed" : "inProgress")
+                    handleProgressUpdate(3, e.target.checked ? "completed" : "pending")
                     updatePatientCheckboxes("ctScanUploaded", e.target.checked)
                   }}>
                   CT Scan Uploaded
@@ -402,7 +418,7 @@ marginLeft: '5px',
 }}>Upload</button>                </Form.Item>
                 <Form.Item>
                   <Checkbox checked={!!patient?.powerPointCreated} onChange={(e) => {
-                    handleProgressUpdate(4, e.target.checked ? "completed" : "inProgress");
+                    handleProgressUpdate(4, e.target.checked ? "completed" : "pending");
                     updatePatientCheckboxes("powerPointCreated", e.target.checked)
                   }}>
                     PowerPoint Created
@@ -431,7 +447,7 @@ marginLeft: '5px',
                 </Form.Item>
                 <Form.Item>
                   <Checkbox checked={!!patient?.doctorReviewCompleted} onChange={(e) => {
-                    handleProgressUpdate(5, e.target.checked ? "completed" : "inProgress");
+                    handleProgressUpdate(5, e.target.checked ? "completed" : "pending");
                     updatePatientCheckboxes("doctorReviewCompleted", e.target.checked)
                   }}>
                     Doctor Review Completed
@@ -467,7 +483,7 @@ marginLeft: '5px',
               </div>
               <Form.Item>
               <Checkbox checked={!!patient?.tavrScheduled} onChange={(e) => {
-                    handleProgressUpdate(6, e.target.checked ? "completed" : "inProgress");
+                    handleProgressUpdate(6, e.target.checked ? "completed" : "pending");
                     updatePatientCheckboxes("tavrScheduled", e.target.checked)
                   }}>
                   TAVR Scheduled
