@@ -189,7 +189,7 @@ export default function Table({
                           <div className="flex gap-1">
                             STS Score:
                             <span className="rounded-[4px] border border-[#DDE0E5] p-[2px]">
-                              {patient.indexScores.stsScore}%
+                              {patient.indexScores.stsScore}
                             </span>
                           </div>
                         )}
