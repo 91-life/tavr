@@ -117,8 +117,8 @@ export default function Table({
                   <td className="p-3 text-sm text-gray-900">
                     {patient.doctor}
                   </td>
-                  <td className="p-3 text-sm text-gray-900 font-semibold">
-                    <div className="rounded-[6px] bg-[#EAECF0] py-[2px] px-[8px]">
+                  <td className="p-3 text-sm text-gray-900 font-semibold text-center">
+                    <div className="rounded-[6px] bg-[#EAECF0] py-[2px] px-[8px] inline-block">
                       {patient.diagnosis}
                     </div>
                   </td>

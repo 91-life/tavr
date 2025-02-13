@@ -147,6 +147,18 @@ export default function MainContent() {
     localStorage.setItem("patients", JSON.stringify(updatedPatients));
   };
 
+  const updatePatientCheckboxes = (field, value) => {
+    const updatedPatients = patients.map(patient => {
+      if (patient.MRI === selectedPatient.MRI) {
+        patient[field] = value;
+      }
+      return patient;
+    });
+
+    setPatients(updatedPatients);
+    localStorage.setItem("patients", JSON.stringify(updatedPatients));
+  }
+
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -212,6 +224,7 @@ export default function MainContent() {
           <TAVRWorkflowForm
             patient={selectedPatient}
             updateProgress={updateProgress}
+            updatePatientCheckboxes={updatePatientCheckboxes}
           />
         </Modal>}
       {displayScheduleForm && <ScheduleForm patient={selectedPatient} />}
