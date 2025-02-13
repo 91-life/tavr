@@ -5,9 +5,9 @@ import Button from "./Button";
 import RegisterForm from "./RegisterForm";
 import UpdateForm from "./UpdateForm";
 import ScheduleForm from "./ScheduleForm";
-import '../index.css'; 
+import "../index.css";
 
-import { patients } from "../data/patients";
+import { patients as initialPatients } from "../data/patients";
 
 export default function MainContent() {
   const [displayTable, setDisplayTable] = useState(true);
@@ -22,6 +22,14 @@ export default function MainContent() {
     setDisplayScheduleForm(false);
     setDisplayRegisterForm(false);
   }
+
+  const [patients, setPatients] = useState(() => {
+    const storedPatients = localStorage.getItem("patients");
+    if (!storedPatients)
+      localStorage.setItem("patients", JSON.stringify(initialPatients));
+
+    return storedPatients ? JSON.parse(storedPatients) : initialPatients;
+  });
 
   const itemsPerPage = 10;
   const totalPages = Math.ceil(patients.length / itemsPerPage);
@@ -50,6 +58,45 @@ export default function MainContent() {
     setSelectedPatient(patient);
     resetDisplay();
     setDisplayScheduleForm(true);
+  };
+
+  const handleRegisterPatientButtonClick = (formData) => {
+    const newPatient = {
+      name: `${formData.firstName} ${formData.lastName}` || "",
+      dateOfBirth: formData.dateOfBirth || "",
+      MRI: formData.mrn || "",
+      doctor: formData.physician || "",
+      diagnosis: formData.diagnosis || "",
+      latestEcho: {
+        date: formData.echoDate || "",
+        color: "#009758",
+      },
+      latestCTScan: {
+        date: "",
+      },
+      labs: {
+        date: "",
+      },
+      appointment: {
+        date: formData.consultationAppointment || "",
+      },
+      dvcRepIntpr: "Device Rep Interpretation",
+      status: "Update Patient",
+      indexScores: {},
+      timeline: {
+        status: {
+          text: "Awaiting Consultation",
+          color: "#02844E",
+          includeArrow: true,
+        },
+        progress: {},
+      },
+    };
+    const updatedPatients = [...patients, newPatient];
+    setPatients(updatedPatients); 
+    localStorage.setItem("patients", JSON.stringify(updatedPatients));
+    setDisplayRegisterForm(false);
+    setDisplayTable(true);
   };
 
   return (
@@ -82,7 +129,7 @@ export default function MainContent() {
       )}
       {displayRegisterForm && (
         <RegisterForm
-          handleCancelButtonClick={handleCancelAddPatientButtonClick}
+          handleRegisterPatientButtonClick={handleRegisterPatientButtonClick}
         />
       )}
       {displayUpdateForm && <UpdateForm patient={selectedPatient} />}
