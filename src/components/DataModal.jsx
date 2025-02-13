@@ -308,7 +308,7 @@ const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes }) 
                 </div>
 
                 <Form.Item>
-                  <Checkbox checked={!!patient?.ctScanCompleted}>CT Scan Completed</Checkbox>
+                  <Checkbox>CT Scan Completed</Checkbox>
                 </Form.Item>
                 <Form.Item>
                   <Checkbox checked={!!patient?.ctScanUploaded} onChange={(e) => {
@@ -322,7 +322,7 @@ const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes }) 
 
               <Stage innerRef={stageRefs.current[4]} title="Stage 5 - Documentation" status={stages[4].status}>
                 <Form.Item>
-                  <Checkbox checked={!!patient?.patientInfoWorksheetCompleted}>Patient Info Worksheet Completed</Checkbox>
+                  <Checkbox>Patient Info Worksheet Completed</Checkbox>
                 </Form.Item>
                 <Form.Item>
                   <Checkbox checked={!!patient?.powerPointCreated} onChange={(e) => {
@@ -336,7 +336,7 @@ const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes }) 
 
               <Stage innerRef={stageRefs.current[5]} title="Stage 6 - Review Process" status={stages[5].status}>
                 <Form.Item>
-                  <Checkbox checked={!!patient?.deviceRepReviewed}>Device Rep Reviewed</Checkbox>
+                  <Checkbox>Device Rep Reviewed</Checkbox>
                 </Form.Item>
                 <Form.Item>
                   <Checkbox checked={!!patient?.doctorReviewCompleted} onChange={(e) => {
@@ -354,13 +354,13 @@ const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes }) 
                 status={stages[6].status}
               >
                 <Form.Item>
-                  <Checkbox checked={!!patient?.additionalTestingRequired}>Additional Testing Required</Checkbox>
+                  <Checkbox>Additional Testing Required</Checkbox>
                 </Form.Item>
                 <Form.Item>
-                  <Checkbox checked={!!patient?.tavrWorkupCompleted}>TAVR Workup Completed</Checkbox>
+                  <Checkbox>TAVR Workup Completed</Checkbox>
                 </Form.Item>
                 <Form.Item>
-                  <Checkbox checked={!!patient?.powerPointReviewed}>PowerPoint Reviewed</Checkbox>
+                  <Checkbox>PowerPoint Reviewed</Checkbox>
                 </Form.Item>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                   <div style={{ marginTop: '5px', marginRight: '5px', width: '150px' }}>TAVR Appointment:</div>
@@ -373,7 +373,10 @@ const TAVRWorkflowForm = ({ patient, updateProgress, updatePatientCheckboxes }) 
                   </Form.Item>
                 </div>
                 <Form.Item>
-                  <Checkbox checked={!!patient?.tavrScheduled} onChange={(e) => handleProgressUpdate(6, e.target.checked ? "completed" : "inProgress")}>
+                  <Checkbox checked={!!patient?.tavrScheduled} onChange={(e) => {
+                    handleProgressUpdate(6, e.target.checked ? "completed" : "inProgress");
+                    updatePatientCheckboxes("tavrScheduled", e.target.checked)
+                  }}>
                     TAVR Scheduled
                   </Checkbox>
                 </Form.Item>
