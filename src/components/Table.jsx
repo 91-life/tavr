@@ -199,12 +199,17 @@ export default function Table({
                   <td
                     className="p-3 text-xs"
                     style={{
-                      color: patient.timeline.status.color || "#02844E",
+                      color: "#009999",
                     }}
                   >
                     <div className="flex gap-1">
                       <span className="font-medium">
-                        {patient.timeline.status.text}
+                      { patient.timeline.progress.seventh == '#009999' ? "Final Decision" :
+                      patient.timeline.progress.sixth == '#009999' ? "Review Process" :
+    patient.timeline.progress.fifth == '#009999' ? "Documentation" :
+    patient.timeline.progress.fourth == '#009999' ? "CT Scan" : 
+    patient.timeline.progress.third == '#009999' ? "CTS Consultation" :
+    patient.timeline.progress.second == '#009999' ? "Initial Consultation" :  "Appointment & Echo"}
                       </span>
                       {patient.timeline.status.includeArrow && (
                         <div className="mt-[3px]">
