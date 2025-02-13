@@ -153,7 +153,7 @@ export default function MainContent() {
           setDisplayRegisterForm(false);
           setDisplayTable(true);
         }}
-        width="70vw"
+        width="55vw"
         style={{
           height: "80vh !important",
         }}
