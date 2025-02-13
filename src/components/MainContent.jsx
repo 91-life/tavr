@@ -28,15 +28,6 @@ export default function MainContent() {
     content: {
       width: "80vw",
       height: "80%",
-      padding: "0",
-      margin: "0",
-      marginTop: "-40px",
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
       maxWidth: 1400,
     },
   }
@@ -112,7 +103,15 @@ export default function MainContent() {
           color: "#02844E",
           includeArrow: true,
         },
-        progress: {},
+        progress: {
+          first: "#d9d9d9",
+          second: "#d9d9d9",
+          third: "#d9d9d9",
+          fourth: "#d9d9d9",
+          fifth: "#d9d9d9",
+          sixth: "#d9d9d9",
+          seventh: "#d9d9d9",
+        },
       },
     };
     const updatedPatients = [newPatient, ...patients];
@@ -123,15 +122,30 @@ export default function MainContent() {
   }, [patients, itemsPerPage, displayTable, displayRegisterForm]);
 
   const handleUpdatePatient = useCallback((updatedPatient) => {
-    const updatedPatients = patients.map(patient => 
+    const updatedPatients = patients.map(patient =>
       patient.MRI === updatedPatient.MRI ? updatedPatient : patient
     );
-  
+
     setPatients(updatedPatients);
     localStorage.setItem("patients", JSON.stringify(updatedPatients));
     setDisplayUpdateForm(false);
     setDisplayTable(true);
   }, [patients]);
+
+  const updateProgress = (stageIndex, newStatus) => {
+    const updatedPatients = patients.map(patient => {
+      if (patient.MRI === selectedPatient.MRI) {
+        const progressKeys = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh"];
+        const progressKey = progressKeys[stageIndex];
+
+        patient.timeline.progress[progressKey] = newStatus === "completed" ? "#009999" : "#d9d9d9";
+      }
+      return patient;
+    });
+
+    setPatients(updatedPatients);
+    localStorage.setItem("patients", JSON.stringify(updatedPatients));
+  };
 
 
   useEffect(() => {
@@ -186,17 +200,20 @@ export default function MainContent() {
           handleRegisterPatientButtonClick={handleRegisterPatientButtonClick}
         />
       </Modal>
-      {displayUpdateForm && 
-       <Modal
-        style={modalStyle.content}
-        open={displayUpdateForm}
-        width= "80vw"
-        getContainer={document.body}
-        onCancel={handleCancel}
-        footer={null} // If you want no footer buttons (optional)
-     >
-      <TAVRWorkflowForm patient={selectedPatient} />
-     </Modal>}
+      {displayUpdateForm &&
+        <Modal
+          style={modalStyle.content}
+          open={displayUpdateForm}
+          width="80vw"
+          getContainer={document.body}
+          onCancel={handleCancel}
+          footer={null}
+        >
+          <TAVRWorkflowForm
+            patient={selectedPatient}
+            updateProgress={updateProgress}
+          />
+        </Modal>}
       {displayScheduleForm && <ScheduleForm patient={selectedPatient} />}
     </div>
   );
