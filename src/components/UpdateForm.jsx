@@ -1,13 +1,78 @@
+import { useState } from "react";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { DatePicker, Select } from "antd";
+import { doctors } from "../data/doctors";
 
-function UpdateForm({ patient }) {
+function UpdateForm({ patient, handleUpdatePatient }) {
+
+  const [formData, setFormData] = useState({
+    firstName: patient?.name.split(" ")[0] || "",
+    lastName: patient?.name.split(" ")[1] || "",
+    dateOfBirth: patient?.dateOfBirth || "",
+    age: patient?.age || "",
+    gender: patient?.gender || "",
+    mrn: patient?.MRI || "",
+    diagnosis: patient?.diagnosis || "",
+    echoDate: patient?.latestEcho?.date || "",
+    consultationAppointment: patient?.appointment?.date || "",
+    physician: patient?.doctor || "",
+    kccq: patient?.indexScores?.kccScore || "",
+    katz: patient?.indexScores?.katzIndexScore || "",
+    sts: patient?.indexScores?.stsScore || "",
+    pwt: patient?.pwt || "",
+    ctsConsultation: patient?.ctsConsultation || "",
+    cardiacCath: patient?.cardiacCath || "",
+    ctTavrProtocol: patient?.ctTavrProtocol || "",
+    tooltipInputCTS: patient?.tooltipInputCTS || "",
+    tooltipInputCath: patient?.tooltipInputCath || "",
+    tooltipInputTAVR: patient?.tooltipInputTAVR || ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleDateChange = (date, dateString, fieldName) => {
+    setFormData({ ...formData, [fieldName]: dateString });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const updatedPatient = {
+      ...patient,
+      ...formData,
+      name: `${formData.firstName} ${formData.lastName}`,
+      MRI: formData.mrn,
+      doctor: formData.physician,
+      latestEcho: { date: formData.echoDate },
+      appointment: { date: formData.consultationAppointment },
+      indexScores: {
+        kccScore: formData.kccq,
+        katzIndexScore: formData.katsIndexScore,
+        stsScore: formData.stsScore,
+      },
+      pwt: formData.pwt,
+      ctsConsultation: formData.ctsConsultation,
+      cardiacCath: formData.cardiacCath,
+      ctTavrProtocol: formData.ctTavrProtocol,
+      cathAppointment: formData.cathAppointment,
+      ctsAppointment: formData.ctsAppointment,
+    };
+
+    handleUpdatePatient(updatedPatient);
+  };
+
   return (
-    <form className="flex w-screen h-screen justify-center items-center gap-9 pl-8 pb-96">
-      <div className="FormField flex-row h-1/2">
+    <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6 p-2 h-full">
+      <div className="FormField grid justify-items-end h-1/2">
         <div className="h-20">
           <label
-            htmlFor="firstName"
+            htmlFor="First Name"
             className="block text-sm/6 font-medium text-gray-900"
           >
             First Name:
@@ -20,6 +85,7 @@ function UpdateForm({ patient }) {
               defaultValue={patient?.name.split(" ")[0] || ""}
               placeholder={"N/A"}
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -36,8 +102,9 @@ function UpdateForm({ patient }) {
               name="lastName"
               type="text"
               defaultValue={patient?.name.split(" ")[1] || ""}
-              placeholder={"N/A"}
+              placeholder={"Last Name"}
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -48,33 +115,14 @@ function UpdateForm({ patient }) {
           >
             Date Of Birth:
           </label>
-          <div className="mt-2 w-96 grid grid-cols-1">
-            <input
+          <div className="mt-2 w-96">
+            <DatePicker
               id="dateOfBirth"
               name="dateOfBirth"
-              type="text"
-              defaultValue={patient.dateOfBirth}
+              format="DD/MM/YY"
               placeholder="DD/MM/YY"
-              className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
-            />
-            <CalendarIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></CalendarIcon>
-          </div>
-        </div>
-        <div className="h-20">
-          <label
-            htmlFor="age"
-            className="block text-sm/6 font-medium text-gray-900"
-          >
-            Age:
-          </label>
-          <div className="mt-2 w-96">
-            <input
-              id="age"
-              name="age"
-              type="text"
-              defaultValue={patient.age}
-              placeholder={"N/A"}
-              className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              className="col-start-1 row-start-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={(date, dateString) => handleDateChange(date, dateString, "dateOfBirth")}
             />
           </div>
         </div>
@@ -91,8 +139,9 @@ function UpdateForm({ patient }) {
               name="gender"
               type="text"
               defaultValue={patient.gender}
-              placeholder={"-"}
+              placeholder={"Gender"}
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -109,8 +158,9 @@ function UpdateForm({ patient }) {
               name="mrn"
               type="text"
               defaultValue={patient.MRI}
-              placeholder={"-"}
+              placeholder={"MRN"}
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -127,8 +177,9 @@ function UpdateForm({ patient }) {
               name="diagnosis"
               type="text"
               defaultValue={patient.diagnosis}
-              placeholder="-"
+              placeholder="Diagnosis"
               className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
             <MagnifyingGlassIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></MagnifyingGlassIcon>
           </div>
@@ -143,15 +194,14 @@ function UpdateForm({ patient }) {
             Echo Date:
           </label>
           <div className="mt-2 w-96 grid grid-cols-1">
-            <input
+            <DatePicker
               id="echoDate"
               name="echoDate"
-              type="text"
-              defaultValue={patient.latestEcho.date}
+              format="DD/MM/YY"
               placeholder="DD/MM/YY"
-              className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              className="col-start-1 row-start-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={(date, dateString) => handleDateChange(date, dateString, "echoDate")}
             />
-            <CalendarIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></CalendarIcon>
           </div>
         </div>
         <div className="h-20">
@@ -162,15 +212,14 @@ function UpdateForm({ patient }) {
             Consultation Appointment:
           </label>
           <div className="mt-2 w-96 grid grid-cols-1">
-            <input
+            <DatePicker
               id="consultationAppointment"
               name="consultationAppointment"
-              type="text"
-              defaultValue={patient.appointment.date}
+              format="DD/MM/YY"
               placeholder="DD/MM/YY"
-              className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              className="col-start-1 row-start-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={(date, dateString) => handleDateChange(date, dateString, "consultationAppointment")}
             />
-            <CalendarIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></CalendarIcon>
           </div>
         </div>
         <div className="h-20">
@@ -181,15 +230,20 @@ function UpdateForm({ patient }) {
             Physician:
           </label>
           <div className="mt-2 w-96 grid grid-cols-1">
-            <input
+            <Select
               id="physician"
               name="physician"
               type="text"
               defaultValue={patient.doctor}
-              placeholder=""
-              className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
-            />
-            <MagnifyingGlassIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></MagnifyingGlassIcon>
+              placeholder="Select a Physician"
+              onChange={(value) => setFormData({ ...formData, physician: value })}
+            >
+              {doctors.map((doctor, index) => (
+                <Select.Option key={index} value={doctor}>
+                  {doctor}
+                </Select.Option>
+              ))}
+            </Select>
           </div>
         </div>
         <div className="pt-3 flex justify-start items-center">
@@ -376,13 +430,7 @@ function UpdateForm({ patient }) {
             <div className="absolute right-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-8 border-b-8 border-transparent border-r-8 border-r-gray-200"></div>
           </div>
         </div>
-        <div className="pt-2 w-96 flex justify-start items-center gap-2">
-          <button
-            style={{ backgroundColor: "rgba(0, 153, 153, 1)" }}
-            className="px-4 py-2 rounded-lg text-white"
-          >
-            Go Back
-          </button>
+        <div className="pt-2 w-96 flex justify-end">
           <button
             style={{ backgroundColor: "rgba(0, 153, 153, 1)" }}
             className="bg-green-500 px-4 py-2 rounded-lg text-white"

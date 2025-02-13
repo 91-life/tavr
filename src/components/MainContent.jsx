@@ -100,6 +100,18 @@ export default function MainContent() {
     setDisplayTable(true);
   }, [patients, itemsPerPage, displayTable, displayRegisterForm]);
 
+  const handleUpdatePatient = useCallback((updatedPatient) => {
+    const updatedPatients = patients.map(patient => 
+      patient.MRI === updatedPatient.MRI ? updatedPatient : patient
+    );
+  
+    setPatients(updatedPatients);
+    localStorage.setItem("patients", JSON.stringify(updatedPatients));
+    setDisplayUpdateForm(false);
+    setDisplayTable(true);
+  }, [patients]);
+
+
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -141,18 +153,36 @@ export default function MainContent() {
           setDisplayRegisterForm(false);
           setDisplayTable(true);
         }}
-        width="90vw"
+        width="70vw"
         style={{
-          height: "90vh !important",
+          height: "80vh !important",
         }}
         footer={null}
       >
         <RegisterForm
-          key={displayRegisterForm ? Date.now() : ""}
+          key={displayRegisterForm ? `register-form-${Date.now()}` : ""}
           handleRegisterPatientButtonClick={handleRegisterPatientButtonClick}
         />
       </Modal>
-      {displayUpdateForm && <UpdateForm patient={selectedPatient} />}
+      <Modal
+        title="Update Patient"
+        open={displayUpdateForm}
+        onCancel={() => {
+          setDisplayUpdateForm(false);
+          setDisplayTable(true);
+        }}
+        width="70vw"
+        style={{
+          height: "80vh !important",
+        }}
+        footer={null}
+      >
+        <UpdateForm 
+          key={displayUpdateForm ? `update-form-${Date.now()}` : ""}
+          patient={selectedPatient}
+          handleUpdatePatient={handleUpdatePatient}
+        />
+      </Modal>
       {displayScheduleForm && <ScheduleForm patient={selectedPatient} />}
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { DatePicker } from "antd";
+import { DatePicker, Select } from "antd";
+import { doctors } from "../data/doctors";
 
 function RegisterForm({ handleRegisterPatientButtonClick }) {
   const [formData, setFormData] = useState({
@@ -59,7 +60,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               id="firstName"
               name="firstName"
               type="text"
-              placeholder="N/A"
+              placeholder="First Name"
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
               onChange={handleChange}
             />
@@ -77,7 +78,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               id="lastName"
               name="lastName"
               type="text"
-              placeholder="N/A"
+              placeholder="Last Name"
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
               onChange={handleChange}
             />
@@ -113,7 +114,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               id="gender"
               name="gender"
               type="text"
-              placeholder="-"
+              placeholder="Gender"
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
               onChange={handleChange}
             />
@@ -133,7 +134,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               id="mrn"
               name="mrn"
               type="text"
-              placeholder="-"
+              placeholder="MRN"
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
               onChange={handleChange}
             />
@@ -151,7 +152,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               id="diagnosis"
               name="diagnosis"
               type="text"
-              placeholder=""
+              placeholder="Diagnosis"
               className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
               onChange={handleChange}
             />
@@ -266,15 +267,19 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
             Physician:
           </label>
           <div className="mt-2 w-96 grid grid-cols-1">
-            <input
+            <Select
               id="physician"
               name="physician"
-              type="text"
-              placeholder=""
-              className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
-              onChange={handleChange}
-            />
-            <MagnifyingGlassIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></MagnifyingGlassIcon>
+              placeholder="Select a Physician"
+              onChange={(value) => setFormData({ ...formData, physician: value })}
+              value={formData.physician}
+            >
+              {doctors.map((doctor, index) => (
+                <Select.Option key={index} value={doctor}>
+                  {doctor}
+                </Select.Option>
+              ))}
+            </Select>
           </div>
         </div>
         <div className="pt-2 w-96 flex justify-end">
