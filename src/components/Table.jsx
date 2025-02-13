@@ -63,12 +63,6 @@ export default function Table({
                   scope="col"
                   className="p-3 text-center text-sm font-semibold text-gray-500"
                 >
-                  Labs
-                </th>
-                <th
-                  scope="col"
-                  className="p-3 text-center text-sm font-semibold text-gray-500"
-                >
                   Appointment
                 </th>
                 <th
@@ -77,12 +71,7 @@ export default function Table({
                 >
                   Device Rep. Interpretation
                 </th>
-                <th
-                  scope="col"
-                  className="p-3 text-center text-sm font-semibold text-gray-500"
-                >
-                  Patient Status
-                </th>
+                
                 <th
                   scope="col"
                   className="p-3 text-center text-sm font-semibold text-gray-500"
@@ -104,6 +93,12 @@ export default function Table({
                       <path d="M12 16L4 8h16l-8 8z" />
                     </svg>
                   </div>
+                </th>
+                <th
+                  scope="col"
+                  className="p-3 text-center text-sm font-semibold text-gray-500"
+                >
+                 
                 </th>
               </tr>
             </thead>
@@ -139,12 +134,6 @@ export default function Table({
                   >
                     {patient.latestCTScan.date || `---`}
                   </td>
-                  <td
-                    className="p-3 underline text-sm text-center"
-                    style={{ color: patient.labs.color || "#2654EB" }}
-                  >
-                    {patient.labs.date || `---`}
-                  </td>
                   <td className="whitespace-nowrap p-3 text-sm text-center">
                     <div className="flex gap-1 ">
                       <span
@@ -165,25 +154,7 @@ export default function Table({
                   <td className="p-3 text-sm text-gray-400">
                     {patient.dvcRepIntpr}
                   </td>
-                  <td className="p-3">
-                    <div className="flex justify-center">
-                      <Button
-                        onClick={() =>
-                          patient.status === "Schedule TAVR"
-                            ? handleScheduleForm(patient)
-                            : handleUpdateForm(patient)
-                        }
-                        label={patient.status}
-                        color={
-                          patient.status.toLowerCase().includes("update")
-                            ? "#009999"
-                            : patient.status.toLowerCase().includes("tavr")
-                            ? "#F37200"
-                            : "#039F5E"
-                        }
-                      />
-                    </div>
-                  </td>
+                  
                   <td
                     className={classNames(
                       isEmpty(patient.indexScores)
@@ -297,6 +268,16 @@ export default function Table({
                           background:
                             patient.timeline.progress.seventh || "#ffffff",
                         }}
+                      />
+                    </div>
+                  </td>
+                  <td className="p-3">
+                    <div className="flex justify-center">
+                      <Button
+                        onClick={() => handleUpdateForm(patient)
+                        }
+                        label={"Update Patient"}
+                        color={"#009999"}
                       />
                     </div>
                   </td>

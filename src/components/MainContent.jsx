@@ -6,9 +6,10 @@ import RegisterForm from "./RegisterForm";
 import UpdateForm from "./UpdateForm";
 import ScheduleForm from "./ScheduleForm";
 import "../index.css";
+import TAVRWorkflowForm from "./DataModal";
+import { Modal } from 'antd';
 
 import { patients as initialPatients } from "../data/patients";
-import { Modal } from "antd";
 
 export default function MainContent() {
   const [displayTable, setDisplayTable] = useState(true);
@@ -18,10 +19,26 @@ export default function MainContent() {
   const [selectedPatient, setSelectedPatient] = useState(null);
 
   function resetDisplay() {
-    setDisplayTable(false);
+    // setDisplayTable(false);
     setDisplayUpdateForm(false);
     setDisplayScheduleForm(false);
     setDisplayRegisterForm(false);
+  }
+  const modalStyle = {
+    content: {
+      width: "80vw",
+      height: "80%",
+      padding: "0",
+      margin: "0",
+      marginTop: "-40px",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      maxWidth: 1400,
+    },
   }
 
   const [patients, setPatients] = useState(() => {
@@ -45,7 +62,7 @@ export default function MainContent() {
 
   const handleCancelAddPatientButtonClick = () => {
     resetDisplay();
-    setDisplayTable(true);
+    // setDisplayTable(true);
   };
 
   const handleUpdateForm = (patient) => {
@@ -58,6 +75,12 @@ export default function MainContent() {
     setSelectedPatient(patient);
     resetDisplay();
     setDisplayScheduleForm(true);
+  };
+  const [open, setOpen] = useState(false);
+
+  const handleCancel = () => {
+    resetDisplay();
+    // setDisplayTable(true);
   };
 
   const handleRegisterPatientButtonClick = useCallback((formData) => {
@@ -163,25 +186,17 @@ export default function MainContent() {
           handleRegisterPatientButtonClick={handleRegisterPatientButtonClick}
         />
       </Modal>
-      <Modal
-        title="Update Patient"
+      {displayUpdateForm && 
+       <Modal
+        style={modalStyle.content}
         open={displayUpdateForm}
-        onCancel={() => {
-          setDisplayUpdateForm(false);
-          setDisplayTable(true);
-        }}
-        width="70vw"
-        style={{
-          height: "80vh !important",
-        }}
-        footer={null}
-      >
-        <UpdateForm 
-          key={displayUpdateForm ? `update-form-${Date.now()}` : ""}
-          patient={selectedPatient}
-          handleUpdatePatient={handleUpdatePatient}
-        />
-      </Modal>
+        width= "80vw"
+        getContainer={document.body}
+        onCancel={handleCancel}
+        footer={null} // If you want no footer buttons (optional)
+     >
+      <TAVRWorkflowForm patient={selectedPatient} />
+     </Modal>}
       {displayScheduleForm && <ScheduleForm patient={selectedPatient} />}
     </div>
   );
