@@ -92,7 +92,7 @@ export default function MainContent() {
         progress: {},
       },
     };
-    const updatedPatients = [...patients, newPatient];
+    const updatedPatients = [newPatient, ...patients];
     setPatients(updatedPatients); 
     localStorage.setItem("patients", JSON.stringify(updatedPatients));
     setDisplayRegisterForm(false);
