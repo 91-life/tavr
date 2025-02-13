@@ -12,6 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "antd": "^5.24.0",
     "autoprefixer": "^10.4.20",
     "cra-template": "1.2.0",
     "postcss": "^8.5.1",

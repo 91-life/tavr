@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Table from "./Table";
 import Button from "./Button";
@@ -60,7 +60,7 @@ export default function MainContent() {
     setDisplayScheduleForm(true);
   };
 
-  const handleRegisterPatientButtonClick = (formData) => {
+  const handleRegisterPatientButtonClick = useCallback((formData) => {
     const newPatient = {
       name: `${formData.firstName} ${formData.lastName}` || "",
       dateOfBirth: formData.dateOfBirth || "",
@@ -97,7 +97,13 @@ export default function MainContent() {
     localStorage.setItem("patients", JSON.stringify(updatedPatients));
     setDisplayRegisterForm(false);
     setDisplayTable(true);
-  };
+  }, [patients, itemsPerPage, displayTable, displayRegisterForm]);
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setDisplayedPatients(patients.slice(startIndex, endIndex));
+  }, [currentPage, patients, itemsPerPage]);
 
   return (
     <div

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { CalendarIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { DatePicker } from "antd";
 
 function RegisterForm({ handleRegisterPatientButtonClick }) {
   const [formData, setFormData] = useState({
@@ -18,6 +18,10 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleDateChange = (date, dateString, fieldName) => {
+    setFormData({ ...formData, [fieldName]: dateString });
   };
 
   const handleSubmit = (e) => {
@@ -57,6 +61,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               type="text"
               placeholder="N/A"
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -74,6 +79,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               type="text"
               placeholder="N/A"
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -84,31 +90,14 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
           >
             Date Of Birth:
           </label>
-          <div className="mt-2 w-96 grid grid-cols-1">
-            <input
+          <div className="mt-2 w-96">
+            <DatePicker
               id="dateOfBirth"
               name="dateOfBirth"
-              type="text"
+              format="DD/MM/YY"
               placeholder="DD/MM/YY"
-              className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
-            />
-            <CalendarIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></CalendarIcon>
-          </div>
-        </div>
-        <div className="h-20">
-          <label
-            htmlFor="age"
-            className="block text-sm/6 font-medium text-gray-900"
-          >
-            Age:
-          </label>
-          <div className="mt-2 w-96">
-            <input
-              id="age"
-              name="age"
-              type="text"
-              placeholder="-"
-              className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              className="col-start-1 row-start-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={(date, dateString) => handleDateChange(date, dateString, "dateOfBirth")}
             />
           </div>
         </div>
@@ -126,6 +115,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               type="text"
               placeholder="-"
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -145,6 +135,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               type="text"
               placeholder="-"
               className="block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -162,6 +153,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               type="text"
               placeholder=""
               className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
             <MagnifyingGlassIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></MagnifyingGlassIcon>
           </div>
@@ -176,14 +168,14 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
           <div className="">
             <div className="flex items-center gap-3 h-8">
               <div className="mt-2 w-40 grid grid-cols-1">
-                <input
+                <DatePicker
                   id="echoDate"
                   name="echoDate"
-                  type="text"
+                  format="DD/MM/YY"
                   placeholder="DD/MM/YY"
-                  className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+                  className="col-start-1 row-start-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+                  onChange={(date, dateString) => handleDateChange(date, dateString, "echoDate")}
                 />
-                <CalendarIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></CalendarIcon>
               </div>
               <button
                 style={{ backgroundColor: "rgba(0, 153, 153, 1)" }}
@@ -213,6 +205,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
                     type="checkbox"
                     aria-describedby="echoAvailable"
                     className="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                    onChange={handleChange}
                   />
                   <svg
                     fill="none"
@@ -254,15 +247,15 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
           >
             Consultation Appointment:
           </label>
-          <div className="mt-2 w-96 grid grid-cols-1">
-            <input
+          <div className="mt-2 w-96">
+            <DatePicker
               id="consultationAppointment"
               name="consultationAppointment"
-              type="text"
+              format="DD/MM/YY"
               placeholder="DD/MM/YY"
-              className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              className="col-start-1 row-start-1 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={(date, dateString) => handleDateChange(date, dateString, "consultationAppointment")}
             />
-            <CalendarIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></CalendarIcon>
           </div>
         </div>
         <div className="h-20 pt-1">
@@ -279,6 +272,7 @@ function RegisterForm({ handleRegisterPatientButtonClick }) {
               type="text"
               placeholder=""
               className="col-start-1 row-start-1 sm:pl-9 block w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-indigo-600"
+              onChange={handleChange}
             />
             <MagnifyingGlassIcon className="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4"></MagnifyingGlassIcon>
           </div>
