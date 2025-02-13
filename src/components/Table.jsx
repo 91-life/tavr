@@ -224,49 +224,49 @@ export default function Table({
                         className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
-                            patient.timeline.progress.first || "#ffffff",
+                            patient.timeline.progress.first === "#d9d9d9" ? "#ffffff" : (patient.timeline.progress.first || "#ffffff"),
                         }}
                       />
                       <div
                         className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
-                            patient.timeline.progress.second || "#ffffff",
+                            patient.timeline.progress.second === "#d9d9d9" ?  "#ffffff" : (patient.timeline.progress.second || "#ffffff"),
                         }}
                       />
                       <div
                         className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
-                            patient.timeline.progress.third || "#ffffff",
+                            patient.timeline.progress.third === "#d9d9d9" ? "#ffffff" : (patient.timeline.progress.third || "#ffffff"),
                         }}
                       />
                       <div
                         className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
-                            patient.timeline.progress.fourth || "#ffffff",
+                            patient.timeline.progress.fourth === "#d9d9d9" ? "#ffffff" : (patient.timeline.progress.fourth || "#ffffff"),
                         }}
                       />
                       <div
                         className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
-                            patient.timeline.progress.fifth || "#ffffff",
+                            patient.timeline.progress.fifth === "#d9d9d9" ? "#ffffff" : (patient.timeline.progress.fifth || "#ffffff"),
                         }}
                       />
                       <div
                         className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
-                            patient.timeline.progress.sixth || "#ffffff",
+                            patient.timeline.progress.sixth === "#d9d9d9" ? "#ffffff" : (patient.timeline.progress.sixth || "#ffffff"),
                         }}
                       />
                       <div
                         className="min-w-2 min-h-2 aspect-square rounded-full border border-[#000000]"
                         style={{
                           background:
-                            patient.timeline.progress.seventh || "#ffffff",
+                            patient.timeline.progress.seventh === "#d9d9d9" ? "#ffffff" : (patient.timeline.progress.seventh || "#ffffff"),
                         }}
                       />
                     </div>
