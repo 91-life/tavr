@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import { Form, Image, Input, message } from "antd";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return sessionStorage.getItem('isLoggedIn') === 'true'; // Default to true or false from sessionStorage
-  });
+  // const [isLoggedIn, setIsLoggedIn] = useState(() => {
+  //   return sessionStorage.getItem('isLoggedIn') === 'true'; // Default to true or false from sessionStorage
+  // });
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   useEffect(() => {
     sessionStorage.setItem('isLoggedIn', isLoggedIn.toString());
@@ -20,7 +21,7 @@ function App() {
   }
   return (
     <>
-      {!isLoggedIn && (
+      {/* {!isLoggedIn && (
         <div
           style={{
             backgroundImage: 'url("https://storage.googleapis.com/ninety-one-public-bucket/logo/login-page-bg.png")',
@@ -90,17 +91,17 @@ function App() {
           </Form>
         </div>
       )
-      }
-      {
-        isLoggedIn && (
+      } */}
+      {/* {
+        isLoggedIn && ( */}
           <div className="h-screen overflow-x-hidden overflow-y-auto">
             <Navbar />
             <Sidebar />
             <MainContent />
             {/* comment */}
           </div>
-        )
-      }
+        {/* )
+      } */}
     </>
   );
 }
